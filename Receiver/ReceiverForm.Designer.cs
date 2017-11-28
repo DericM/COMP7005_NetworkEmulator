@@ -59,6 +59,7 @@
             this.Controls.Add(this.groupBoxLog);
             this.Name = "ReceiverForm";
             this.Text = "Receiver";
+            this.Load += new System.EventHandler(this.ReceiverForm_Load);
             this.groupBoxLog.ResumeLayout(false);
             this.ResumeLayout(false);
 

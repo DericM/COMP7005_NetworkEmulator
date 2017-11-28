@@ -16,5 +16,13 @@ namespace Receiver
         {
             InitializeComponent();
         }
+
+        Receiver receiver;
+
+        private void ReceiverForm_Load(object sender, EventArgs e)
+        {
+            receiver = new Receiver();
+            receiver.connect();
+        }
     }
 }

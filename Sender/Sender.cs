@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 using TcpLib;
 
@@ -11,19 +12,20 @@ namespace Sender
     class Sender
     {
 
-        TcpClient transferClnt;
-        Stream transferStream;
+        TcpClient client;
+        StreamWriter streamWriter;
+        StreamReader streamReader;
 
         public bool connect(String ip, int port)
         {
             try
             {
-                transferClnt = new TcpClient();
+                client = new TcpClient();
                 Console.WriteLine("Connecting.....");
                 
-                transferClnt.Connect(ip, 7004);
-                
-                transferStream = transferClnt.GetStream();
+                client.Connect(ip, 7005);
+                streamWriter = new StreamWriter(client.GetStream());
+                streamReader = new StreamReader(client.GetStream());
 
                 Console.WriteLine("Connected");
 
@@ -38,37 +40,55 @@ namespace Sender
         }
 
 
-        public bool sendMultiplePackets(int n)
+
+        public void startDataStream()
         {
-            for(int i = 0; i < n; i++)
+            int seq = 0;
+            int ack = 0;
+            int window = 5;
+            
+            while (true)
+            {
+                sendWindow(seq, window);
+                seq += window;
+                
+            }
+
+            
+
+        }
+
+
+        public void sendWindow(int seq, int windowSize)
+        {
+            for (int i= seq; i < seq + windowSize; i++)
             {
                 sendDataPacket(i);
             }
-            return true;
+        }
+
+
+
+        public void ackReceiver()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                Packet packet = Serializer.ReadObject<Packet>(streamReader);
+                if(packet != null)
+                {
+                    
+                }
+            });
         }
 
 
 
 
-        public bool sendDataPacket(int Sequence)
+        public void sendDataPacket(int seq, int ack, int win)
         {
-            var newPacket = new Packet
-            {
-                PacketType = 0,
-                SeqNum = Sequence,
-                WindowSize = 1,
-                AckNum = 0,
-                Data = "data"
-            };
+            Packet newPacket = Packet.DATA(seq, ack, win, "data");
 
-            string serializedPacket = JsonConvert.SerializeObject(newPacket);
-            
-            if (transferStream.CanWrite)
-            {
-                transferStream.Write(Encoding.UTF8.GetBytes(serializedPacket), 0, serializedPacket.Length);
-                return true;
-            }
-            return false;
+            Serializer.SendObject(streamWriter, newPacket);
         }
         
 

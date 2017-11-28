@@ -16,5 +16,18 @@ namespace Sender
         {
             InitializeComponent();
         }
+
+        Sender sender;
+
+        private void SenderForm_Load(object sender, EventArgs e)
+        {
+            this.sender = new Sender();
+            this.sender.connect("localhost", 7005);
+        }
+
+        private void buttonSend_Click(object sender, EventArgs e)
+        {
+            this.sender.sendDataPacket(1);
+        }
     }
 }
