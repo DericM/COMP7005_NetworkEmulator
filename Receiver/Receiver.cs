@@ -25,20 +25,14 @@ namespace Receiver
                     {
                         Console.WriteLine("Client connected...");
                         var reader = new StreamReader(client.GetStream());
-                        Packet obj = Serializer.ReadObject<Packet>(reader);
-                        while (obj != null)
+                        var writer = new StreamWriter(client.GetStream());
+                        Packet packet = Serializer.ReadObject<Packet>(reader);
+                        while (packet != null)
                         {
-                            Packet ack = new Packet
-                            { 
-                                PacketType = 1,
-                                SeqNum = 0,
-                                WindowSize = 1,
-                                AckNum = obj.SeqNum,
-                                Data = ""
-                            };
+                            Serializer.SendObject(writer, Packet.ACK(packet.SeqNum, packet.SeqNum, packet.WindowSize));
 
-                            Console.WriteLine("[" + obj + "]");
-                            obj = Serializer.ReadObject<Packet>(reader);
+                            Console.WriteLine("[" + packet + "]");
+                            packet = Serializer.ReadObject<Packet>(reader);
                         }
                         Console.WriteLine("Client disconnected...");
                     });

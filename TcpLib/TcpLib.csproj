@@ -44,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Packet.cs" />
+    <Compile Include="PacketMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializer.cs" />
+    <Compile Include="SlidingWIndow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

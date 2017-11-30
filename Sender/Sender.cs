@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Xml.Serialization;
 using TcpLib;
 
@@ -15,8 +16,9 @@ namespace Sender
         TcpClient client;
         StreamWriter streamWriter;
         StreamReader streamReader;
+        SlidingWindow window;
 
-        public bool connect(String ip, int port)
+        public bool Connect(String ip, int port)
         {
             try
             {
@@ -40,56 +42,16 @@ namespace Sender
         }
 
 
-
-        public void startDataStream()
+        public void StartDataStream()
         {
-            int seq = 0;
-            int ack = 0;
-            int window = 5;
-            
-            while (true)
-            {
-                sendWindow(seq, window);
-                seq += window;
-                
-            }
-
-            
-
-        }
-
-
-        public void sendWindow(int seq, int windowSize)
-        {
-            for (int i= seq; i < seq + windowSize; i++)
-            {
-                sendDataPacket(i);
-            }
+            window = new SlidingWindow(5);
+            window.AckThread(streamReader);
+            window.SendThread(streamWriter);
         }
 
 
 
-        public void ackReceiver()
-        {
-            Task.Factory.StartNew(() =>
-            {
-                Packet packet = Serializer.ReadObject<Packet>(streamReader);
-                if(packet != null)
-                {
-                    
-                }
-            });
-        }
-
-
-
-
-        public void sendDataPacket(int seq, int ack, int win)
-        {
-            Packet newPacket = Packet.DATA(seq, ack, win, "data");
-
-            Serializer.SendObject(streamWriter, newPacket);
-        }
+       
         
 
     }

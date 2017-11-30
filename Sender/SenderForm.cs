@@ -22,12 +22,12 @@ namespace Sender
         private void SenderForm_Load(object sender, EventArgs e)
         {
             this.sender = new Sender();
-            this.sender.connect("localhost", 7005);
+            this.sender.Connect("localhost", 7005);
         }
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            this.sender.sendDataPacket(1);
+            this.sender.StartDataStream();
         }
     }
 }
