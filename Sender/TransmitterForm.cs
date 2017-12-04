@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using TcpLib;
 
@@ -30,6 +31,7 @@ namespace Sender
         private void SenderForm_Load(object sender, EventArgs e)
         {
             textBoxHostIP.Text = Utilities.GetLocalIPAddress();
+            listBoxLog.DrawMode = DrawMode.OwnerDrawFixed;
         }
 
         private void buttonSend_Click(object sender, EventArgs e)
@@ -79,6 +81,9 @@ namespace Sender
             numericUpDownWinSize.Enabled = togle;
         }
 
-
+        private void listBoxLog_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Utilities.FormatLogEntries(e, listBoxLog);
+        }
     }
 }

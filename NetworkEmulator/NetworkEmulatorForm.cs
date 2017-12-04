@@ -15,7 +15,7 @@ namespace NetworkEmulator
 {
     public partial class NetworkEmulatorForm : Form
     {
-
+        private static NetworkEmulatorForm _instance;
         private NetworkEmulator networkEmulator;
 
         private BindingList<Packet> packetLogIn;
@@ -23,10 +23,12 @@ namespace NetworkEmulator
 
         private bool running;
 
+        public static NetworkEmulatorForm Instance { get { return _instance; } }
 
         public NetworkEmulatorForm()
         {
             InitializeComponent();
+            _instance = this;
 
             networkEmulator = new NetworkEmulator();
 
@@ -61,31 +63,7 @@ namespace NetworkEmulator
 
         private void listBoxLogIn_DrawItem(object sender, DrawItemEventArgs e)
         {
-            e.DrawBackground();
-            // Define the default color of the brush as black.
-            Brush myBrush = Brushes.Black;
-
-            // Determine the color of the brush to draw each item based  
-            // on the index of the item to draw. 
-            switch (e.Index)
-            {
-                case 0:
-                    myBrush = Brushes.Red;
-                    break;
-                case 1:
-                    myBrush = Brushes.Orange;
-                    break;
-                case 2:
-                    myBrush = Brushes.Purple;
-                    break;
-            }
-
-            // Draw the current item text based on the current Font  
-            // and the custom brush settings.
-            e.Graphics.DrawString(listBoxLogIn.Items[e.Index].ToString(),
-                e.Font, myBrush, e.Bounds, StringFormat.GenericDefault);
-            // If the ListBox has focus, draw a focus rectangle around the selected item.
-            e.DrawFocusRectangle();
+            Utilities.FormatLogEntries(e, listBoxLogIn);
         }
 
         private void NetworkEmulatorForm_Load(object sender, EventArgs e)
@@ -152,5 +130,9 @@ namespace NetworkEmulator
             numericUpDownB2in.Enabled = togle;
         }
 
+        private void listBoxLogOut_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Utilities.FormatLogEntries(e, listBoxLogOut);
+        }
     }
 }

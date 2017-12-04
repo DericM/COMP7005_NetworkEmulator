@@ -40,10 +40,10 @@
             this.textBoxHostIP = new System.Windows.Forms.TextBox();
             this.groupBoxConnect = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelB2out = new System.Windows.Forms.Label();
-            this.numericUpDownB2out = new System.Windows.Forms.NumericUpDown();
-            this.textBoxB2OutIP = new System.Windows.Forms.TextBox();
             this.labelB2Outip = new System.Windows.Forms.Label();
+            this.textBoxB2OutIP = new System.Windows.Forms.TextBox();
+            this.numericUpDownB2out = new System.Windows.Forms.NumericUpDown();
+            this.labelB2out = new System.Windows.Forms.Label();
             this.labelHostIP = new System.Windows.Forms.Label();
             this.groupBoxCharacteristics = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -85,6 +85,7 @@
             this.listBoxLogOut.Name = "listBoxLogOut";
             this.listBoxLogOut.Size = new System.Drawing.Size(289, 420);
             this.listBoxLogOut.TabIndex = 1;
+            this.listBoxLogOut.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxLogOut_DrawItem);
             // 
             // groupBoxLogIn
             // 
@@ -207,14 +208,22 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(169, 54);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
-            // labelB2out
+            // labelB2Outip
             // 
-            this.labelB2out.AutoSize = true;
-            this.labelB2out.Location = new System.Drawing.Point(3, 26);
-            this.labelB2out.Name = "labelB2out";
-            this.labelB2out.Size = new System.Drawing.Size(59, 26);
-            this.labelB2out.TabIndex = 3;
-            this.labelB2out.Text = "Transmitter Port";
+            this.labelB2Outip.AutoSize = true;
+            this.labelB2Outip.Location = new System.Drawing.Point(3, 0);
+            this.labelB2Outip.Name = "labelB2Outip";
+            this.labelB2Outip.Size = new System.Drawing.Size(59, 26);
+            this.labelB2Outip.TabIndex = 4;
+            this.labelB2Outip.Text = "Transmitter IP";
+            // 
+            // textBoxB2OutIP
+            // 
+            this.textBoxB2OutIP.Location = new System.Drawing.Point(69, 3);
+            this.textBoxB2OutIP.Name = "textBoxB2OutIP";
+            this.textBoxB2OutIP.Size = new System.Drawing.Size(97, 20);
+            this.textBoxB2OutIP.TabIndex = 5;
+            this.textBoxB2OutIP.Text = "localhost";
             // 
             // numericUpDownB2out
             // 
@@ -238,22 +247,14 @@
             0,
             0});
             // 
-            // textBoxB2OutIP
+            // labelB2out
             // 
-            this.textBoxB2OutIP.Location = new System.Drawing.Point(69, 3);
-            this.textBoxB2OutIP.Name = "textBoxB2OutIP";
-            this.textBoxB2OutIP.Size = new System.Drawing.Size(97, 20);
-            this.textBoxB2OutIP.TabIndex = 5;
-            this.textBoxB2OutIP.Text = "localhost";
-            // 
-            // labelB2Outip
-            // 
-            this.labelB2Outip.AutoSize = true;
-            this.labelB2Outip.Location = new System.Drawing.Point(3, 0);
-            this.labelB2Outip.Name = "labelB2Outip";
-            this.labelB2Outip.Size = new System.Drawing.Size(59, 26);
-            this.labelB2Outip.TabIndex = 4;
-            this.labelB2Outip.Text = "Transmitter IP";
+            this.labelB2out.AutoSize = true;
+            this.labelB2out.Location = new System.Drawing.Point(3, 26);
+            this.labelB2out.Name = "labelB2out";
+            this.labelB2out.Size = new System.Drawing.Size(59, 26);
+            this.labelB2out.TabIndex = 3;
+            this.labelB2out.Text = "Transmitter Port";
             // 
             // labelHostIP
             // 

@@ -42,7 +42,10 @@ namespace Receiver
                         Packet packet = Serializer.ReadObject<Packet>(reader);
                         while (packet != null && running)
                         {
-                            Serializer.SendObject(writer, Packet.ACK(packet.SeqNum, packet.SeqNum, packet.WindowSize));
+                            ReceiverForm.Instance.Log(packet);
+                            Packet ack = Packet.ACK(packet.SeqNum, packet.SeqNum, packet.WindowSize);
+                            Serializer.SendObject(writer, ack);
+                            ReceiverForm.Instance.Log(ack);
                             packet = Serializer.ReadObject<Packet>(reader);
                         }
                         Console.WriteLine("Client disconnected...");

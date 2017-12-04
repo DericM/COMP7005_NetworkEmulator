@@ -49,11 +49,5 @@ namespace Sender
             window.Stop();
         }
 
-
-
-       
-        
-
     }
-
 }

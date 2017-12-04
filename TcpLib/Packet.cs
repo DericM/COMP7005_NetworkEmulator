@@ -22,6 +22,9 @@ namespace TcpLib
         public int AckNum { get; set; }
         public string Data { get; set; }
 
+        public int Delay { get; set; }
+        public bool Droped { get; set; }
+
         public override string ToString()
         {
             return "PacketType: " + PacketType +
@@ -39,7 +42,10 @@ namespace TcpLib
                 SeqNum = seq,
                 WindowSize = win,
                 AckNum = ack,
+                Delay = 0,
+                Droped = false,
                 Data = ""
+                
             };
         }
 
@@ -51,6 +57,8 @@ namespace TcpLib
                 SeqNum = seq,
                 WindowSize = win,
                 AckNum = ack,
+                Delay = 0,
+                Droped = false,
                 Data = data
             };
         }

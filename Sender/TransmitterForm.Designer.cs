@@ -73,6 +73,7 @@
             this.listBoxLog.Name = "listBoxLog";
             this.listBoxLog.Size = new System.Drawing.Size(369, 394);
             this.listBoxLog.TabIndex = 0;
+            this.listBoxLog.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxLog_DrawItem);
             // 
             // buttonSend
             // 

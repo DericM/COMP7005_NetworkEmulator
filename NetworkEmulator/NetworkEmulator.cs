@@ -13,6 +13,7 @@ namespace NetworkEmulator
 {
     class NetworkEmulator
     {
+        
         private bool running;
         private int latency;
         private int variance;
@@ -87,12 +88,15 @@ namespace NetworkEmulator
                 Packet packet = Serializer.ReadObject<Packet>(reader);
                 while (packet != null && running)
                 {
+                    NetworkEmulatorForm.Instance.LogIn(packet);
                     InitiateDelay(packet);
 
-                    if (!RollForDrop())
+                    if (!RollForDrop(packet))
                     {
                         Serializer.SendObject(writer, packet);
+                        
                     }
+                    NetworkEmulatorForm.Instance.LogOut(packet);
 
                     packet = Serializer.ReadObject<Packet>(reader);
                 }
@@ -112,15 +116,18 @@ namespace NetworkEmulator
         private void InitiateDelay(Packet packet)
         {
             int delay = latency + random.Next(0, variance+1);
+            packet.Delay = delay;
             Thread.Sleep(delay);
         }
 
-        private bool RollForDrop()
+        private bool RollForDrop(Packet packet)
         {
             if (random.Next(0, 100) < dropRate)
             {
+                packet.Droped = true;
                 return true;
             }
+            packet.Droped = false;
             return false;
         }
 

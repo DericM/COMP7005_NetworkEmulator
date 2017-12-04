@@ -13,13 +13,28 @@ namespace Receiver
 {
     public partial class ReceiverForm : Form
     {
+        private static ReceiverForm _instance;
         private Receiver receiver;
         private bool running;
+        private BindingList<Packet> packetLog;
+
+        public static ReceiverForm Instance { get { return _instance; } }
 
         public ReceiverForm()
         {
             InitializeComponent();
+            _instance = this;
             running = false;
+            packetLog = new BindingList<Packet>();
+
+            listBoxLog.DataSource = packetLog;
+        }
+
+        public void Log(Packet newEntry)
+        {
+            listBoxLog.Invoke((MethodInvoker)delegate {
+                packetLog.Add(newEntry);
+            });
         }
 
         private void ReceiverForm_Load(object sender, EventArgs e)
