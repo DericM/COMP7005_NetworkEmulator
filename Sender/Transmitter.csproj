@@ -48,15 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sender.cs" />
-    <Compile Include="SenderForm.cs">
+    <Compile Include="PacketMonitor.cs" />
+    <Compile Include="Transmitter.cs" />
+    <Compile Include="TransmitterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SenderForm.Designer.cs">
-      <DependentUpon>SenderForm.cs</DependentUpon>
+    <Compile Include="TransmitterForm.Designer.cs">
+      <DependentUpon>TransmitterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlidingWIndow.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -66,8 +68,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SenderForm.resx">
-      <DependentUpon>SenderForm.cs</DependentUpon>
+    <EmbeddedResource Include="TransmitterForm.resx">
+      <DependentUpon>TransmitterForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

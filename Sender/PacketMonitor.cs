@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using TcpLib;
 
-namespace TcpLib
+namespace Sender
 {
-    class PacketMonitor
+    public class PacketMonitor
     {
 
         public Packet packet;
@@ -23,7 +24,7 @@ namespace TcpLib
             timeout = true;
             timer = new Timer();
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            timer.Interval = 50;
+            timer.Interval = 500;
             timer.Enabled = true;
         }
 
@@ -34,6 +35,7 @@ namespace TcpLib
 
         public void resetTimer()
         {
+            timeout = false;
             timer.Stop();
             timer.Start();
         }

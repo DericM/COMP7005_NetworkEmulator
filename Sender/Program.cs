@@ -16,7 +16,7 @@ namespace Sender
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SenderForm());
+            Application.Run(new TransmitterForm());
         }
     }
 }

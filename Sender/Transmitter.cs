@@ -10,12 +10,10 @@ using TcpLib;
 
 namespace Sender
 {
-    class Sender
+    class Transmitter
     {
 
         TcpClient client;
-        StreamWriter streamWriter;
-        StreamReader streamReader;
         SlidingWindow window;
 
         public bool Connect(String ip, int port)
@@ -25,9 +23,7 @@ namespace Sender
                 client = new TcpClient();
                 Console.WriteLine("Connecting.....");
                 
-                client.Connect(ip, 7005);
-                streamWriter = new StreamWriter(client.GetStream());
-                streamReader = new StreamReader(client.GetStream());
+                client.Connect(ip, port);
 
                 Console.WriteLine("Connected");
 
@@ -42,11 +38,15 @@ namespace Sender
         }
 
 
-        public void StartDataStream()
+        public void StartDataStream(int windowSize, int packets)
         {
-            window = new SlidingWindow(5);
-            window.AckThread(streamReader);
-            window.SendThread(streamWriter);
+            window = new SlidingWindow(client, windowSize, packets);
+        }
+
+
+        public void Stop()
+        {
+            window.Stop();
         }
 
 
