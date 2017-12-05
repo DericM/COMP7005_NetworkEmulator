@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows.Forms;
 
-namespace TcpLib
+namespace Shared
 {
     public class Utilities
     {
@@ -26,32 +28,46 @@ namespace TcpLib
 
         public static void FormatLogEntries(DrawItemEventArgs e, ListBox listBox)
         {
+            e.DrawBackground();
             if (e.Index < 0)
                 return;
 
             Packet packet = (Packet)listBox.Items[e.Index];
-
-            Brush myBrush = Brushes.Black;
-
+            
+            Color backgroundColor = Color.White;
             if (packet.Droped)
             {
-                myBrush = Brushes.Red;
-                e.DrawBackground();
+                backgroundColor = Color.Black;
             }
             else
             {
-                if (packet.Delay <= 0)
+                if (packet.Delay > 90)
                 {
-                    myBrush = Brushes.White;
+                    backgroundColor = Color.OrangeRed;
                 }
-                else
+                else if(packet.Delay > 60)
                 {
-                    myBrush = Brushes.Orange;
+                    backgroundColor = Color.DarkOrange;
                 }
-                e.DrawBackground();
+                else if (packet.Delay > 30)
+                {
+                    backgroundColor = Color.Orange;
+                }
+
             }
-            
-            
+
+            e = new DrawItemEventArgs(e.Graphics,
+                                          e.Font,
+                                          e.Bounds,
+                                          e.Index,
+                                          e.State,
+                                          e.ForeColor,
+                                          backgroundColor);//Choose the color
+
+            e.DrawBackground();
+
+            Brush myBrush = Brushes.Black;
+
             switch (packet.PacketType)
             {
                 case Packet.Type.Ack:
@@ -67,6 +83,19 @@ namespace TcpLib
 
             // If the ListBox has focus, draw a focus rectangle around the selected item.
             e.DrawFocusRectangle();
+        }
+
+        public static void SaveFileDialogue(SaveFileDialog saveFileDialog, BindingList<Packet> packetLog)
+        {
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter SaveFile = new StreamWriter(saveFileDialog.FileName);
+                foreach (var item in packetLog)
+                {
+                    SaveFile.WriteLine(item.ToString());
+                }
+                SaveFile.Close();
+            }
         }
 
 

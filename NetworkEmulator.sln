@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transmitter", "Sender\Transmitter.csproj", "{AC695BD3-D9D1-4363-8C99-BEB7D84BB264}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transmitter", "Transmitter\Transmitter.csproj", "{AC695BD3-D9D1-4363-8C99-BEB7D84BB264}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BCD412B3-1932-4CFB-8E89-BE0F8A7F7273} = {BCD412B3-1932-4CFB-8E89-BE0F8A7F7273}
 	EndProjectSection
@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Receiver", "Receiver\Receiv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkEmulator", "NetworkEmulator\NetworkEmulator.csproj", "{06DE2079-FE9D-4E4D-9933-7D0D9B79C930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpLib", "TcpLib\TcpLib.csproj", "{BCD412B3-1932-4CFB-8E89-BE0F8A7F7273}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{BCD412B3-1932-4CFB-8E89-BE0F8A7F7273}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

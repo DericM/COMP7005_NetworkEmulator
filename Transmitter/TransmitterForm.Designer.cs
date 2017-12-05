@@ -46,6 +46,8 @@
             this.numericUpDownWinSize = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownNumPackets = new System.Windows.Forms.NumericUpDown();
             this.labelWinSize = new System.Windows.Forms.Label();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.buttonSaveLog = new System.Windows.Forms.Button();
             this.groupBoxLog.SuspendLayout();
             this.groupBoxBridge1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -61,7 +63,7 @@
             this.groupBoxLog.Controls.Add(this.listBoxLog);
             this.groupBoxLog.Location = new System.Drawing.Point(193, 12);
             this.groupBoxLog.Name = "groupBoxLog";
-            this.groupBoxLog.Size = new System.Drawing.Size(392, 426);
+            this.groupBoxLog.Size = new System.Drawing.Size(397, 453);
             this.groupBoxLog.TabIndex = 0;
             this.groupBoxLog.TabStop = false;
             this.groupBoxLog.Text = "Log";
@@ -71,7 +73,7 @@
             this.listBoxLog.FormattingEnabled = true;
             this.listBoxLog.Location = new System.Drawing.Point(6, 19);
             this.listBoxLog.Name = "listBoxLog";
-            this.listBoxLog.Size = new System.Drawing.Size(369, 394);
+            this.listBoxLog.Size = new System.Drawing.Size(380, 420);
             this.listBoxLog.TabIndex = 0;
             this.listBoxLog.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxLog_DrawItem);
             // 
@@ -102,7 +104,7 @@
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(75, 23);
             this.buttonConnect.TabIndex = 2;
-            this.buttonConnect.Text = "Connect";
+            this.buttonConnect.Text = "Start";
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
@@ -268,11 +270,27 @@
             this.labelWinSize.TabIndex = 5;
             this.labelWinSize.Text = "Window Size";
             // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.FileName = "log.txt";
+            this.saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            // 
+            // buttonSaveLog
+            // 
+            this.buttonSaveLog.Location = new System.Drawing.Point(113, 428);
+            this.buttonSaveLog.Name = "buttonSaveLog";
+            this.buttonSaveLog.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveLog.TabIndex = 7;
+            this.buttonSaveLog.Text = "Save Log";
+            this.buttonSaveLog.UseVisualStyleBackColor = true;
+            this.buttonSaveLog.Click += new System.EventHandler(this.buttonSaveLog_Click);
+            // 
             // TransmitterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(653, 477);
+            this.ClientSize = new System.Drawing.Size(602, 474);
+            this.Controls.Add(this.buttonSaveLog);
             this.Controls.Add(this.groupBoxSend);
             this.Controls.Add(this.textBoxHostIP);
             this.Controls.Add(this.labelHostIP);
@@ -316,6 +334,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDownWinSize;
         private System.Windows.Forms.NumericUpDown numericUpDownNumPackets;
         private System.Windows.Forms.Label labelWinSize;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Button buttonSaveLog;
     }
 }
 

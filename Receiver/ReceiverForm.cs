@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TcpLib;
+using Shared;
+using System.IO;
 
 namespace Receiver
 {
@@ -28,12 +23,16 @@ namespace Receiver
             packetLog = new BindingList<Packet>();
 
             listBoxLog.DataSource = packetLog;
+            listBoxLog.DrawMode = DrawMode.OwnerDrawFixed;
+            
         }
 
         public void Log(Packet newEntry)
         {
             listBoxLog.Invoke((MethodInvoker)delegate {
                 packetLog.Add(newEntry);
+                listBoxLog.TopIndex = listBoxLog.Items.Count - 1;
+                listBoxLog.SelectedIndex = listBoxLog.Items.Count - 1;
             });
         }
 
@@ -65,6 +64,16 @@ namespace Receiver
         private void TogleForms(bool togle)
         {
             numericUpDownPort.Enabled = togle;
+        }
+
+        private void listBoxLog_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Utilities.FormatLogEntries(e, listBoxLog);
+        }
+
+        private void buttonSaveLog_Click(object sender, EventArgs e)
+        {
+            Utilities.SaveFileDialogue(saveFileDialog, packetLog);
         }
     }
 }

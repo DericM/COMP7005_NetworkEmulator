@@ -33,10 +33,12 @@
             this.groupBoxBridge1 = new System.Windows.Forms.GroupBox();
             this.buttonConnect = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.numericUpDownPort = new System.Windows.Forms.NumericUpDown();
             this.labelPort = new System.Windows.Forms.Label();
+            this.numericUpDownPort = new System.Windows.Forms.NumericUpDown();
             this.textBoxHostIP = new System.Windows.Forms.TextBox();
             this.labelHostIP = new System.Windows.Forms.Label();
+            this.buttonSaveLog = new System.Windows.Forms.Button();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.groupBoxLog.SuspendLayout();
             this.groupBoxBridge1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -60,6 +62,7 @@
             this.listBoxLog.Name = "listBoxLog";
             this.listBoxLog.Size = new System.Drawing.Size(370, 420);
             this.listBoxLog.TabIndex = 0;
+            this.listBoxLog.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxLog_DrawItem);
             // 
             // groupBoxBridge1
             // 
@@ -96,6 +99,15 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(169, 27);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
+            // labelPort
+            // 
+            this.labelPort.AutoSize = true;
+            this.labelPort.Location = new System.Drawing.Point(3, 0);
+            this.labelPort.Name = "labelPort";
+            this.labelPort.Size = new System.Drawing.Size(26, 13);
+            this.labelPort.TabIndex = 1;
+            this.labelPort.Text = "Port";
+            // 
             // numericUpDownPort
             // 
             this.numericUpDownPort.Location = new System.Drawing.Point(56, 3);
@@ -118,15 +130,6 @@
             0,
             0});
             // 
-            // labelPort
-            // 
-            this.labelPort.AutoSize = true;
-            this.labelPort.Location = new System.Drawing.Point(3, 0);
-            this.labelPort.Name = "labelPort";
-            this.labelPort.Size = new System.Drawing.Size(26, 13);
-            this.labelPort.TabIndex = 1;
-            this.labelPort.Text = "Port";
-            // 
             // textBoxHostIP
             // 
             this.textBoxHostIP.Location = new System.Drawing.Point(72, 22);
@@ -144,11 +147,27 @@
             this.labelHostIP.TabIndex = 6;
             this.labelHostIP.Text = "Host IP";
             // 
+            // buttonSaveLog
+            // 
+            this.buttonSaveLog.Location = new System.Drawing.Point(112, 437);
+            this.buttonSaveLog.Name = "buttonSaveLog";
+            this.buttonSaveLog.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveLog.TabIndex = 8;
+            this.buttonSaveLog.Text = "Save Log";
+            this.buttonSaveLog.UseVisualStyleBackColor = true;
+            this.buttonSaveLog.Click += new System.EventHandler(this.buttonSaveLog_Click);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.FileName = "log.txt";
+            this.saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            // 
             // ReceiverForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 484);
+            this.Controls.Add(this.buttonSaveLog);
             this.Controls.Add(this.textBoxHostIP);
             this.Controls.Add(this.labelHostIP);
             this.Controls.Add(this.groupBoxBridge1);
@@ -177,6 +196,8 @@
         private System.Windows.Forms.Label labelPort;
         private System.Windows.Forms.TextBox textBoxHostIP;
         private System.Windows.Forms.Label labelHostIP;
+        private System.Windows.Forms.Button buttonSaveLog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 

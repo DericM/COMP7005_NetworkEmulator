@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using TcpLib;
+using Shared;
 
 namespace Sender
 {
@@ -118,7 +115,6 @@ namespace Sender
             {
                 if (i.checkTimeout())
                 {
-                    Console.WriteLine("TIMEOUT for packet: " + i.packet.AckNum);
                     TransmitterForm.Instance.Log(i.packet);
                     Serializer.SendObject(streamWriter, i.packet);
                     i.resetTimer();

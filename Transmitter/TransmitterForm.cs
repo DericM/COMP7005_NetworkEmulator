@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
-using TcpLib;
+using Shared;
+using System.IO;
 
 namespace Sender
 {
@@ -24,14 +24,14 @@ namespace Sender
             packetLog = new BindingList<Packet>();
 
             listBoxLog.DataSource = packetLog;
-            //this.listBoxLog.DisplayMember = "PacketType";
-            //this.listBoxLog.ValueMember = "SeqNum";
+            listBoxLog.DrawMode = DrawMode.OwnerDrawFixed;
+            TogleSendForms(false);
         }
 
         private void SenderForm_Load(object sender, EventArgs e)
         {
             textBoxHostIP.Text = Utilities.GetLocalIPAddress();
-            listBoxLog.DrawMode = DrawMode.OwnerDrawFixed;
+            transmitter = new Transmitter();
         }
 
         private void buttonSend_Click(object sender, EventArgs e)
@@ -44,6 +44,8 @@ namespace Sender
         public void Log(Packet newEntry){
             listBoxLog.Invoke((MethodInvoker)delegate {
                 packetLog.Add(newEntry);
+                listBoxLog.TopIndex = listBoxLog.Items.Count - 1;
+                listBoxLog.SelectedIndex = listBoxLog.Items.Count - 1;
             });
         }
 
@@ -58,13 +60,14 @@ namespace Sender
             }
             else
             {
-                connected = true;
                 string ip = textBoxIP.Text;
                 int port = (int)numericUpDownPort.Value;
-                transmitter = new Transmitter();
-                transmitter.Connect(ip, port);
-                TogleConnectForms(false);
-                TogleSendForms(true);
+                if(transmitter.Connect(ip, port))
+                {
+                    connected = true;
+                    TogleConnectForms(false);
+                    TogleSendForms(true);
+                }
             }
             
         }
@@ -79,11 +82,17 @@ namespace Sender
         {
             numericUpDownNumPackets.Enabled = togle;
             numericUpDownWinSize.Enabled = togle;
+            buttonSend.Enabled = togle;
         }
 
         private void listBoxLog_DrawItem(object sender, DrawItemEventArgs e)
         {
             Utilities.FormatLogEntries(e, listBoxLog);
+        }
+
+        private void buttonSaveLog_Click(object sender, EventArgs e)
+        {
+            Utilities.SaveFileDialogue(saveFileDialog, packetLog);
         }
     }
 }

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using TcpLib;
+using Shared;
 
 namespace NetworkEmulator
 {
@@ -20,12 +17,24 @@ namespace NetworkEmulator
         private int dropRate;
         Random random;
 
-        public void Start(string IPOut, int PortOut, int PortListen )
+        TcpClient destination;
+
+        public NetworkEmulator()
         {
             random = new Random();
+            running = false;
+        }
+
+        public bool Start(string IPOut, int PortOut, int PortListen )
+        {
+            destination = new TcpClient();
+            if (!Connect(destination, IPOut, PortOut))
+            {
+                return false;
+            }
             running = true;
-            
-            CreateListener(IPOut, PortOut, PortListen);
+            CreateListener(PortListen);
+            return true;
         }
 
         public void stop()
@@ -34,17 +43,12 @@ namespace NetworkEmulator
         }
 
 
-        public void CreateListener(string destIP, int destPort, int Listenport)
+        public void CreateListener(int Listenport)
         {
             Task.Factory.StartNew(() =>
             {
                 TcpListener listener = new TcpListener(IPAddress.Any, Listenport);
-                TcpClient destination = new TcpClient();
-                if(!Connect(destination, destIP, destPort))
-                {
-                    return;
-                }
-
+                
                 listener.Start();
                 while (running)
                 {
@@ -59,7 +63,6 @@ namespace NetworkEmulator
                         Console.WriteLine("Client disconnected...");
                     });
                 }
-                listener.Stop();
                 destination.Close();
             });
         }
@@ -94,10 +97,9 @@ namespace NetworkEmulator
                     if (!RollForDrop(packet))
                     {
                         Serializer.SendObject(writer, packet);
-                        
+                        NetworkEmulatorForm.Instance.LogOut(packet);
                     }
-                    NetworkEmulatorForm.Instance.LogOut(packet);
-
+                    
                     packet = Serializer.ReadObject<Packet>(reader);
                 }
                 reader.Close();
@@ -115,14 +117,16 @@ namespace NetworkEmulator
 
         private void InitiateDelay(Packet packet)
         {
-            int delay = latency + random.Next(0, variance+1);
+            int delay = latency + random.Next(-variance, variance);
             packet.Delay = delay;
             Thread.Sleep(delay);
         }
 
         private bool RollForDrop(Packet packet)
         {
-            if (random.Next(0, 100) < dropRate)
+            int roll = random.Next(1, 101);
+            Console.WriteLine("roll: " + roll + "dropRate: " + dropRate);
+            if (roll < dropRate)
             {
                 packet.Droped = true;
                 return true;

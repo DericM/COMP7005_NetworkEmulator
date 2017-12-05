@@ -48,12 +48,15 @@
             this.groupBoxCharacteristics = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.numericUpDownlatency = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelDrop = new System.Windows.Forms.Label();
             this.textBoxPercent = new System.Windows.Forms.TextBox();
             this.labelLatency = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelVarience = new System.Windows.Forms.Label();
             this.numericUpDownVariance = new System.Windows.Forms.NumericUpDown();
             this.trackBarDrop = new System.Windows.Forms.TrackBar();
+            this.buttonSaveInLog = new System.Windows.Forms.Button();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.buttonSaveOutLog = new System.Windows.Forms.Button();
             this.groupBoxLogIn.SuspendLayout();
             this.groupBoxLogOut.SuspendLayout();
             this.groupBoxControls.SuspendLayout();
@@ -74,7 +77,7 @@
             this.listBoxLogIn.FormattingEnabled = true;
             this.listBoxLogIn.Location = new System.Drawing.Point(6, 19);
             this.listBoxLogIn.Name = "listBoxLogIn";
-            this.listBoxLogIn.Size = new System.Drawing.Size(298, 420);
+            this.listBoxLogIn.Size = new System.Drawing.Size(300, 420);
             this.listBoxLogIn.TabIndex = 0;
             this.listBoxLogIn.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxLogIn_DrawItem);
             // 
@@ -83,7 +86,7 @@
             this.listBoxLogOut.FormattingEnabled = true;
             this.listBoxLogOut.Location = new System.Drawing.Point(6, 15);
             this.listBoxLogOut.Name = "listBoxLogOut";
-            this.listBoxLogOut.Size = new System.Drawing.Size(289, 420);
+            this.listBoxLogOut.Size = new System.Drawing.Size(300, 420);
             this.listBoxLogOut.TabIndex = 1;
             this.listBoxLogOut.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBoxLogOut_DrawItem);
             // 
@@ -102,7 +105,7 @@
             this.groupBoxLogOut.Controls.Add(this.listBoxLogOut);
             this.groupBoxLogOut.Location = new System.Drawing.Point(533, 12);
             this.groupBoxLogOut.Name = "groupBoxLogOut";
-            this.groupBoxLogOut.Size = new System.Drawing.Size(306, 444);
+            this.groupBoxLogOut.Size = new System.Drawing.Size(316, 444);
             this.groupBoxLogOut.TabIndex = 3;
             this.groupBoxLogOut.TabStop = false;
             this.groupBoxLogOut.Text = "Out Log";
@@ -213,9 +216,9 @@
             this.labelB2Outip.AutoSize = true;
             this.labelB2Outip.Location = new System.Drawing.Point(3, 0);
             this.labelB2Outip.Name = "labelB2Outip";
-            this.labelB2Outip.Size = new System.Drawing.Size(59, 26);
+            this.labelB2Outip.Size = new System.Drawing.Size(53, 26);
             this.labelB2Outip.TabIndex = 4;
-            this.labelB2Outip.Text = "Transmitter IP";
+            this.labelB2Outip.Text = "Receiver IP";
             // 
             // textBoxB2OutIP
             // 
@@ -252,9 +255,9 @@
             this.labelB2out.AutoSize = true;
             this.labelB2out.Location = new System.Drawing.Point(3, 26);
             this.labelB2out.Name = "labelB2out";
-            this.labelB2out.Size = new System.Drawing.Size(59, 26);
+            this.labelB2out.Size = new System.Drawing.Size(53, 26);
             this.labelB2out.TabIndex = 3;
-            this.labelB2out.Text = "Transmitter Port";
+            this.labelB2out.Text = "Receiver Port";
             // 
             // labelHostIP
             // 
@@ -281,10 +284,10 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.28571F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.71429F));
             this.tableLayoutPanel3.Controls.Add(this.numericUpDownlatency, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 2);
+            this.tableLayoutPanel3.Controls.Add(this.labelDrop, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.textBoxPercent, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.labelLatency, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.label1, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.labelVarience, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.numericUpDownVariance, 1, 1);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -313,14 +316,14 @@
             0});
             this.numericUpDownlatency.ValueChanged += new System.EventHandler(this.numericUpDownlatency_ValueChanged);
             // 
-            // label2
+            // labelDrop
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 56);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 26);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Droped Rate";
+            this.labelDrop.AutoSize = true;
+            this.labelDrop.Location = new System.Drawing.Point(3, 56);
+            this.labelDrop.Name = "labelDrop";
+            this.labelDrop.Size = new System.Drawing.Size(33, 26);
+            this.labelDrop.TabIndex = 6;
+            this.labelDrop.Text = "Drop Rate";
             // 
             // textBoxPercent
             // 
@@ -339,14 +342,14 @@
             this.labelLatency.TabIndex = 1;
             this.labelLatency.Text = "Latency";
             // 
-            // label1
+            // labelVarience
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Varience";
+            this.labelVarience.AutoSize = true;
+            this.labelVarience.Location = new System.Drawing.Point(3, 28);
+            this.labelVarience.Name = "labelVarience";
+            this.labelVarience.Size = new System.Drawing.Size(49, 13);
+            this.labelVarience.TabIndex = 3;
+            this.labelVarience.Text = "Varience";
             // 
             // numericUpDownVariance
             // 
@@ -370,11 +373,38 @@
             this.trackBarDrop.TabIndex = 5;
             this.trackBarDrop.Scroll += new System.EventHandler(this.trackBarDrop_Scroll);
             // 
+            // buttonSaveInLog
+            // 
+            this.buttonSaveInLog.Location = new System.Drawing.Point(334, 316);
+            this.buttonSaveInLog.Name = "buttonSaveInLog";
+            this.buttonSaveInLog.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveInLog.TabIndex = 6;
+            this.buttonSaveInLog.Text = "Save Log";
+            this.buttonSaveInLog.UseVisualStyleBackColor = true;
+            this.buttonSaveInLog.Click += new System.EventHandler(this.buttonSaveInLog_Click);
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.FileName = "log.txt";
+            this.saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            // 
+            // buttonSaveOutLog
+            // 
+            this.buttonSaveOutLog.Location = new System.Drawing.Point(452, 316);
+            this.buttonSaveOutLog.Name = "buttonSaveOutLog";
+            this.buttonSaveOutLog.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveOutLog.TabIndex = 7;
+            this.buttonSaveOutLog.Text = "Save Log";
+            this.buttonSaveOutLog.UseVisualStyleBackColor = true;
+            this.buttonSaveOutLog.Click += new System.EventHandler(this.buttonSaveOutLog_Click);
+            // 
             // NetworkEmulatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(850, 508);
+            this.ClientSize = new System.Drawing.Size(856, 508);
+            this.Controls.Add(this.buttonSaveOutLog);
+            this.Controls.Add(this.buttonSaveInLog);
             this.Controls.Add(this.groupBoxCharacteristics);
             this.Controls.Add(this.groupBoxControls);
             this.Controls.Add(this.trackBarDrop);
@@ -421,9 +451,9 @@
         private System.Windows.Forms.TextBox textBoxHostIP;
         private System.Windows.Forms.GroupBox groupBoxCharacteristics;
         private System.Windows.Forms.TextBox textBoxPercent;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelDrop;
         private System.Windows.Forms.TrackBar trackBarDrop;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelVarience;
         private System.Windows.Forms.NumericUpDown numericUpDownVariance;
         private System.Windows.Forms.Label labelLatency;
         private System.Windows.Forms.NumericUpDown numericUpDownlatency;
@@ -433,6 +463,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.GroupBox groupBoxListen;
+        private System.Windows.Forms.Button buttonSaveInLog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Button buttonSaveOutLog;
     }
 }
 

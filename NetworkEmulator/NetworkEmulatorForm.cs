@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TcpLib;
+using Shared;
+using System.IO;
 
 namespace NetworkEmulator
 {
@@ -37,6 +30,8 @@ namespace NetworkEmulator
 
             listBoxLogIn.DataSource = packetLogIn;
             listBoxLogOut.DataSource = packetLogOut;
+            listBoxLogIn.DrawMode = DrawMode.OwnerDrawFixed;
+            listBoxLogOut.DrawMode = DrawMode.OwnerDrawFixed;
 
             running = false;
             updateNetworkVariables();
@@ -46,17 +41,19 @@ namespace NetworkEmulator
         public void LogIn(Packet newEntry)
         {
             listBoxLogIn.Invoke((MethodInvoker)delegate {
-                // Running on the UI thread
                 packetLogIn.Add(newEntry);
+                listBoxLogIn.TopIndex = listBoxLogIn.Items.Count - 1;
+                listBoxLogIn.SelectedIndex = listBoxLogIn.Items.Count - 1;
             });
 
         }
 
         public void LogOut(Packet newEntry)
         {
-            listBoxLogIn.Invoke((MethodInvoker)delegate {
-                // Running on the UI thread
+            listBoxLogOut.Invoke((MethodInvoker)delegate {
                 packetLogOut.Add(newEntry);
+                listBoxLogOut.TopIndex = listBoxLogOut.Items.Count - 1;
+                listBoxLogOut.SelectedIndex = listBoxLogOut.Items.Count - 1;
             });
 
         }
@@ -90,7 +87,7 @@ namespace NetworkEmulator
         private void updateNetworkVariables()
         {
             textBoxPercent.Text = "%" + trackBarDrop.Value;
-            int dropRate = (int)numericUpDownlatency.Value;
+            int dropRate = trackBarDrop.Value;
             int latency = (int)numericUpDownlatency.Value;
             int variance = (int)numericUpDownVariance.Value;
 
@@ -110,15 +107,15 @@ namespace NetworkEmulator
             }
             else
             {
-                running = true;
-
                 string IPOut = textBoxB2OutIP.Text;
                 int PortOut = (int)numericUpDownB2out.Value;
                 int PortListen = (int)numericUpDownB2in.Value;
-
-                networkEmulator.Start(IPOut, PortOut, PortListen);
-                buttonStart.Text = "Stop";
-                ToggleControls(false);
+                if (networkEmulator.Start(IPOut, PortOut, PortListen))
+                {
+                    running = true;
+                    buttonStart.Text = "Stop";
+                    ToggleControls(false);
+                }
             }
         }
 
@@ -133,6 +130,17 @@ namespace NetworkEmulator
         private void listBoxLogOut_DrawItem(object sender, DrawItemEventArgs e)
         {
             Utilities.FormatLogEntries(e, listBoxLogOut);
+        }
+
+
+        private void buttonSaveInLog_Click(object sender, EventArgs e)
+        {
+            Utilities.SaveFileDialogue(saveFileDialog, packetLogIn);
+        }
+
+        private void buttonSaveOutLog_Click(object sender, EventArgs e)
+        {
+            Utilities.SaveFileDialogue(saveFileDialog, packetLogOut);
         }
     }
 }

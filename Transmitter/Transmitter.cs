@@ -1,12 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.IO;
+﻿using System;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Xml.Serialization;
-using TcpLib;
 
 namespace Sender
 {
@@ -16,7 +9,7 @@ namespace Sender
         TcpClient client;
         SlidingWindow window;
 
-        public bool Connect(String ip, int port)
+        public bool Connect(string ip, int port)
         {
             try
             {
@@ -46,7 +39,11 @@ namespace Sender
 
         public void Stop()
         {
-            window.Stop();
+            if (window != null)
+            {
+                window.Stop();
+            }
+            
         }
 
     }
